@@ -8,9 +8,8 @@ function Home() {
   return (
     <>
       <Navbar />
-      
 
-            <section className="bg-dark text-white py-5">
+      <section className="bg-dark text-white py-5">
         <div className="container">
           <div className="text-center mb-4">
             <h1 className="fw-bold">
@@ -25,7 +24,7 @@ function Home() {
           <SearchBar />
         </div>
       </section>
-<main className="container py-5">
+      <main className="container py-5">
         <div className="row">
 
           <div className="col-lg-3">
