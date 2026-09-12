@@ -3,8 +3,23 @@ import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
+import type { SearchFilter } from "../models/search.model";
+import { useState } from "react";
 
 function Home() {
+
+  const [filteredCars, setFilteredCars] = useState(CARS);
+
+  const onSearch = (filter: SearchFilter) => {
+    console.log('onSearch click', filter)
+
+    const newCars = CARS.filter(car => !filter.brand || (car.brand === filter.brand))
+      .filter(car => !filter.model || (car.model === filter.model))
+      .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
+
+    setFilteredCars(newCars);
+  }
+
   return (
     <>
       <Navbar />
@@ -23,7 +38,7 @@ function Home() {
             </p>
           </div>
 
-          <SearchBar />
+          <SearchBar onSearch={onSearch} />
         </div>
       </section>
       <main className="container py-5">
@@ -50,7 +65,7 @@ function Home() {
 
             </div>
 
-            {CARS.map((car) => (
+            {filteredCars.map((car) => (
               <CarCard key={car.id} car={car} />
             ))}
 

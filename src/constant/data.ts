@@ -182,3 +182,15 @@ export const CARS: Car[] = [
         image: "https://images.unsplash.com/photo-1504215680853-026ed2a45def"
     }
 ];
+
+
+export const BRANDS = CARS.map(car => car.brand)
+
+export const CARS_MODELS = CARS.map(car => car.model)
+
+export const SEARCH_PRICES = [
+    10000,
+    20000,
+    30000,
+    50000
+]
