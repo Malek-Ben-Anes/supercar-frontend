@@ -1,3 +1,5 @@
+import { Search } from "react-bootstrap-icons";
+
 function SearchBar() {
   return (
     <div className="bg-white rounded-3 p-3 shadow">
@@ -37,7 +39,7 @@ function SearchBar() {
 
         <div className="col-md-3">
           <button className="btn btn-primary btn-lg w-100">
-            🔎 Rechercher
+            <Search /> Rechercher
           </button>
         </div>
 
