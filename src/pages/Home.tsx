@@ -8,7 +8,7 @@ import { useState } from "react";
 
 function Home() {
 
-  const [filteredCars, setFilteredCars] = useState(CARS);
+  const [orderedFilteredCars, setOrderedFilteredCars] = useState(CARS);
 
   const onSearch = (filter: SearchFilter) => {
     console.log('onSearch click', filter)
@@ -17,7 +17,26 @@ function Home() {
       .filter(car => !filter.model || (car.model === filter.model))
       .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
 
-    setFilteredCars(newCars);
+    setOrderedFilteredCars(newCars);
+  }
+
+  const handleSort = (order: string) => {
+    let filteredCars = CARS;
+
+    if (order === "year") {
+      filteredCars = filteredCars.sort((c1, c2) => c1.year - c2.year)
+    }
+    if (order === "priceAsc") {
+      filteredCars = filteredCars.sort((c1, c2) => c1.price - c2.price)
+    }
+    if (order === "priceDesc") {
+      filteredCars = filteredCars.sort((c1, c2) => c2.price - c1.price)
+    }
+    if (order === "mileage") {
+      filteredCars = filteredCars.sort((c1, c2) => c1.mileage - c2.mileage)
+    }
+
+    setOrderedFilteredCars([...filteredCars])
   }
 
   return (
@@ -25,6 +44,7 @@ function Home() {
       <Navbar />
 
       <section className="bg-dark text-white py-5">
+        yyyy
 
 
         <div className="container">
@@ -56,16 +76,16 @@ function Home() {
                 <strong>{CARS.length}</strong> voitures trouvées
               </h5>
 
-              <select className="form-select w-auto">
-                <option>Plus récentes</option>
-                <option>Prix croissant</option>
-                <option>Prix décroissant</option>
-                <option>Kilométrage</option>
+              <select className="form-select w-auto" onChange={(e) => handleSort(e.target.value)}>
+                <option value="year">Plus récentes</option>
+                <option value="priceAsc">Prix croissant</option>
+                <option value="priceDesc">Prix décroissant</option>
+                <option value="mileage">Kilométrage</option>
               </select>
 
             </div>
 
-            {filteredCars.map((car) => (
+            {orderedFilteredCars.map((car) => (
               <CarCard key={car.id} car={car} />
             ))}
 
