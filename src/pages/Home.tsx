@@ -5,6 +5,7 @@ import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
 import type { SearchFilter } from "../models/search.model";
 import { useState } from "react";
+import type { Car } from "../models/car.model";
 
 function Home() {
 
@@ -24,16 +25,20 @@ function Home() {
     let filteredCars = CARS;
 
     if (order === "year") {
-      filteredCars = filteredCars.sort((c1, c2) => c1.year - c2.year)
+      const orderSort = (c1: Car, c2: Car) => c1.year - c2.year;
+      filteredCars = filteredCars.sort(orderSort);
     }
     if (order === "priceAsc") {
-      filteredCars = filteredCars.sort((c1, c2) => c1.price - c2.price)
+      const orderSort = (c1: Car, c2: Car) => c1.price - c2.price;
+      filteredCars = filteredCars.sort(orderSort)
     }
     if (order === "priceDesc") {
-      filteredCars = filteredCars.sort((c1, c2) => c2.price - c1.price)
+      const orderSort = (c1: Car, c2: Car) => c2.price - c1.price;
+      filteredCars = filteredCars.sort(orderSort)
     }
     if (order === "mileage") {
-      filteredCars = filteredCars.sort((c1, c2) => c1.mileage - c2.mileage)
+      const orderSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage;
+      filteredCars = filteredCars.sort(orderSort)
     }
 
     setOrderedFilteredCars([...filteredCars])
@@ -44,8 +49,6 @@ function Home() {
       <Navbar />
 
       <section className="bg-dark text-white py-5">
-        yyyy
-
 
         <div className="container">
           <div className="text-center mb-4">
