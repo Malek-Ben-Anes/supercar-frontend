@@ -24,23 +24,23 @@ function Home() {
   const handleSort = (order: string) => {
     let filteredCars = CARS;
 
+    let orderSort;
+
     if (order === "year") {
-      const orderSort = (c1: Car, c2: Car) => c1.year - c2.year;
-      filteredCars = filteredCars.sort(orderSort);
+      orderSort = (c1: Car, c2: Car) => c1.year - c2.year;
     }
     if (order === "priceAsc") {
-      const orderSort = (c1: Car, c2: Car) => c1.price - c2.price;
-      filteredCars = filteredCars.sort(orderSort)
+      orderSort = (c1: Car, c2: Car) => c1.price - c2.price;
     }
     if (order === "priceDesc") {
-      const orderSort = (c1: Car, c2: Car) => c2.price - c1.price;
-      filteredCars = filteredCars.sort(orderSort)
+      orderSort = (c1: Car, c2: Car) => c2.price - c1.price;
+
     }
     if (order === "mileage") {
-      const orderSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage;
-      filteredCars = filteredCars.sort(orderSort)
+      orderSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage;
     }
 
+    filteredCars = orderSort ? filteredCars.sort(orderSort) : filteredCars
     setOrderedFilteredCars([...filteredCars])
   }
 
