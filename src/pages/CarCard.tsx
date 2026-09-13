@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Car } from "../models/car.model";
 
 interface Props {
@@ -72,7 +73,12 @@ function CarCard({ car }: Props) {
               </div>
 
               <button className="btn btn-primary">
-                Voir l'annonce
+                <Link
+                  to={`/cars/${car.id}`}
+                  className="btn btn-primary"
+                >
+                  Voir l'annonce
+                </Link>
               </button>
 
             </div>

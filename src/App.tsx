@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CarDetailPage from "./pages/CarDetailPage";
-
+import "./App.css";
 
 function App() {
   return (
