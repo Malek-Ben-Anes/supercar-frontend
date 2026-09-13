@@ -24,23 +24,21 @@ function Home() {
   const handleSort = (order: string) => {
     let filteredCars = CARS;
 
-    let orderSort;
-
+    let paramSort;
     if (order === "year") {
-      orderSort = (c1: Car, c2: Car) => c1.year - c2.year;
+      paramSort = (c1: Car, c2: Car) => c1.year - c2.year
     }
     if (order === "priceAsc") {
-      orderSort = (c1: Car, c2: Car) => c1.price - c2.price;
+      paramSort = (c1: Car, c2: Car) => c1.price - c2.price
     }
     if (order === "priceDesc") {
-      orderSort = (c1: Car, c2: Car) => c2.price - c1.price;
-
+      paramSort = (c1: Car, c2: Car) => c2.price - c1.price
     }
     if (order === "mileage") {
-      orderSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage;
+      paramSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage
     }
 
-    filteredCars = orderSort ? filteredCars.sort(orderSort) : filteredCars
+    filteredCars = filteredCars.sort(paramSort)
     setOrderedFilteredCars([...filteredCars])
   }
 
