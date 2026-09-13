@@ -11,24 +11,19 @@ function FilterSidebar({ onSearch }: Props) {
 
   const [minYear, setMinYear] = useState<number>();
   const [maxYear, setMaxYear] = useState<number>();
-
   const [fuels, setFuels] = useState<string[]>([]);
   const [gearboxes, setGearboxes] = useState<string[]>([]);
 
-
-
-
   const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
     const year = e?.target?.value ? Number(e.target.value) : undefined
+
+    triggerSearch({ minYear: year });
+
     setMinYear(year)
   }
 
-  const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const year = e?.target?.value ? Number(e.target.value) : undefined
-    setMaxYear(year)
-  }
+  const triggerSearch = (filters: SidebarFilter) => {
 
-  const handleSearch = () => {
     const data = {
       minYear,
       maxYear,
@@ -36,24 +31,39 @@ function FilterSidebar({ onSearch }: Props) {
       gearboxes,
     };
 
-    onSearch(data)
+    onSearch({ ...data, ...filters })
+  }
+
+  const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const year = e?.target?.value ? Number(e.target.value) : undefined
+    triggerSearch({ maxYear: year });
+
+    setMaxYear(year)
   }
 
   const handleFuelsChange = (fuel: string) => {
     // C'est le fonctionnement d'un toggle standard
     setFuels((currentFuels) => {
-      return currentFuels.includes(fuel)
+      const newfuels = currentFuels.includes(fuel)
         ? currentFuels.filter(item => item !== fuel)
         : [...currentFuels, fuel]
-    })
+
+      triggerSearch({ fuels: newfuels });
+
+      return newfuels;
+    });
   }
 
   const handleGearBoxes = (gearBox: string) => {
     setGearboxes((currentGearBoxes) => {
-      return currentGearBoxes.includes(gearBox)
+      const newGearBoxes = currentGearBoxes.includes(gearBox)
         ? currentGearBoxes.filter(item => item !== gearBox)
         : [...currentGearBoxes, gearBox]
-    })
+
+      triggerSearch({ gearboxes: newGearBoxes });
+
+      return newGearBoxes;
+    });
   }
 
   return (
@@ -144,11 +154,6 @@ function FilterSidebar({ onSearch }: Props) {
             </div>
           )}
         </div>
-
-
-        <button className="btn btn-dark w-100" onClick={handleSearch}>
-          Appliquer les filtres
-        </button>
 
       </div>
     </div>
