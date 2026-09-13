@@ -1,4 +1,62 @@
-function FilterSidebar() {
+import { useState } from "react";
+import type { SidebarFilter } from "../models/search.model";
+import { FUELS, GEAR_BOXES } from "../constant/data";
+
+
+interface Props {
+  onSearch: (filter: SidebarFilter) => void;
+}
+
+function FilterSidebar({ onSearch }: Props) {
+
+  const [minYear, setMinYear] = useState<number>();
+  const [maxYear, setMaxYear] = useState<number>();
+
+  const [fuels, setFuels] = useState<string[]>([]);
+  const [gearboxes, setGearboxes] = useState<string[]>([]);
+
+
+
+
+  const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const year = e?.target?.value ? Number(e.target.value) : 0
+    setMinYear(year)
+  }
+
+  const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const year = e?.target?.value ? Number(e.target.value) : 2099
+    setMaxYear(year)
+  }
+
+  const handleSearch = () => {
+    const data = {
+      minYear: minYear,
+      maxYear: maxYear,
+      fuels: fuels,
+      gearboxes: gearboxes,
+    };
+
+    console.log(data)
+    // onSearch(data)
+  }
+
+  const handleFuelsChange = (fuel: string) => {
+    // C'est le fonctionnement d'un toggle standard
+    setFuels((currentFuels) => {
+      return currentFuels.includes(fuel)
+        ? currentFuels.filter(item => item !== fuel)
+        : [...currentFuels, fuel]
+    })
+  }
+
+  const handleGearBoxes = (gearBox: string) => {
+    setGearboxes((currentGearBoxes) => {
+      return currentGearBoxes.includes(gearBox)
+        ? currentGearBoxes.filter(item => item !== gearBox)
+        : [...currentGearBoxes, gearBox]
+    })
+  }
+
   return (
     <div className="card border-0 shadow-sm">
       <div className="card-body">
@@ -9,7 +67,7 @@ function FilterSidebar() {
 
         <div className="mb-4">
           <label className="form-label fw-semibold">
-            Prix
+            Année
           </label>
 
           <div className="row g-2">
@@ -18,6 +76,8 @@ function FilterSidebar() {
                 type="number"
                 className="form-control"
                 placeholder="Min"
+                value={minYear}
+                onChange={handleMinYear}
               />
             </div>
 
@@ -26,6 +86,8 @@ function FilterSidebar() {
                 type="number"
                 className="form-control"
                 placeholder="Max"
+                value={maxYear}
+                onChange={handleMaxYear}
               />
             </div>
           </div>
@@ -38,17 +100,13 @@ function FilterSidebar() {
             Carburant
           </label>
 
-          {[
-            "Essence",
-            "Diesel",
-            "Hybride",
-            "Électrique"
-          ].map((fuel) => (
+          {FUELS.map((fuel) => (
             <div className="form-check" key={fuel}>
               <input
                 className="form-check-input"
                 type="checkbox"
                 id={fuel}
+                onChange={() => handleFuelsChange(fuel)}
               />
 
               <label
@@ -68,54 +126,28 @@ function FilterSidebar() {
             Boîte de vitesse
           </label>
 
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="manual"
-            />
+          {GEAR_BOXES.map((gearbox) =>
+            <div className="form-check" key={gearbox}>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="gearbox"
+                value={gearbox}
+                onChange={() => handleGearBoxes(gearbox)}
+              />
 
-            <label
-              className="form-check-label"
-              htmlFor="manual"
-            >
-              Manuelle
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="automatic"
-            />
-
-            <label
-              className="form-check-label"
-              htmlFor="automatic"
-            >
-              Automatique
-            </label>
-          </div>
+              <label
+                className="form-check-label"
+                htmlFor="manual"
+              >
+                {gearbox}
+              </label>
+            </div>
+          )}
         </div>
 
-        <hr />
 
-        <div className="mb-4">
-          <label className="form-label fw-semibold">
-            Kilométrage maximum
-          </label>
-
-          <select className="form-select">
-            <option>Indifférent</option>
-            <option>20 000 km</option>
-            <option>50 000 km</option>
-            <option>100 000 km</option>
-            <option>150 000 km</option>
-          </select>
-        </div>
-
-        <button className="btn btn-dark w-100">
+        <button className="btn btn-dark w-100" onClick={handleSearch}>
           Appliquer les filtres
         </button>
 

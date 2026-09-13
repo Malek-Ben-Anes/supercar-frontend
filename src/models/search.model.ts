@@ -3,3 +3,10 @@ export interface SearchFilter {
     model: string;
     maxPrice: number;
 }
+
+export interface SidebarFilter {
+    minYear?: number;
+    maxYear?: number;
+    fuels?: string[];
+    gearboxes?: string[];
+}

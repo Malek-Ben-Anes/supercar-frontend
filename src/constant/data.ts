@@ -194,3 +194,15 @@ export const SEARCH_PRICES = [
     30000,
     50000
 ]
+
+export const FUELS = [
+    "Essence",
+    "Diesel",
+    "Hybride",
+    "Électrique"
+]
+
+export const GEAR_BOXES = [
+    "manuelle", // TODO refactor les types
+    "Automatique",
+]
