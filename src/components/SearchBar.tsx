@@ -1,31 +1,35 @@
 import { Search } from "react-bootstrap-icons";
 import { CARS_MODELS, SEARCH_PRICES, BRANDS } from "../constant/data";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetSearchFilters, updateSearchFilters } from "../store/carSlice";
-
+import type { RootState } from "../store/store";
 
 function SearchBar() {
 
   const dispatch = useDispatch();
 
-  const [tradeChoice, setTradeChoice] = useState('');
-  const [modelChoice, setModelChoice] = useState('');
-  const [maxPriceChoice, setMaxPriceChoice] = useState(Number.MAX_VALUE);
+  const filters = useSelector(
+    (state: RootState) => state.cars.filters
+  )
 
-  const handleSearch = () => {
-    const data = {
-      brand: tradeChoice,
-      model: modelChoice,
-      maxPrice: maxPriceChoice
-    };
-
-    dispatch(updateSearchFilters(data));
-  }
 
   const handleResetSearch = () => {
     dispatch(resetSearchFilters())
   }
+
+  const handleBrandChoice = (brand: string) => {
+    dispatch(updateSearchFilters({ brand }))
+  }
+
+  const handleModelChoice = (model: string) => {
+    dispatch(updateSearchFilters({ model }))
+  }
+
+  const handleMaxPrice = (maxPrice: number) => {
+    dispatch(updateSearchFilters({ maxPrice }))
+  }
+
+  console.log('render', filters.brand)
 
 
   return (
@@ -34,21 +38,21 @@ function SearchBar() {
       <div className="row g-2">
 
         <div className="col-md-3">
-          <select className="form-select form-select-lg" onChange={(e) => setTradeChoice(e.target.value)}>
+          <select className="form-select form-select-lg" value={filters.brand ?? ""} onChange={(e) => handleBrandChoice(e.target.value)}>
             <option value="" key="none">Toutes les marques</option>
             {BRANDS.map(brand => <option value={brand} key={brand}>{brand}</option>)}
           </select>
         </div>
 
         <div className="col-md-3">
-          <select className="form-select form-select-lg" onChange={(e) => setModelChoice(e.target.value)}>
+          <select className="form-select form-select-lg" value={filters.model ?? ""} onChange={(e) => handleModelChoice(e.target.value)}>
             <option value="" key="none">Tous les modèles</option>
             {CARS_MODELS.map(model => <option value={model} key={model}>{model}</option>)}
           </select>
         </div>
 
         <div className="col-md-3">
-          <select className="form-select form-select-lg" onChange={(e) => setMaxPriceChoice(Number(e.target.value))}>
+          <select className="form-select form-select-lg" value={filters.maxPrice ?? ""} onChange={(e) => handleMaxPrice(Number(e.target.value))}>
             <option value="" key="none">Prix maximum</option>
             {SEARCH_PRICES.map(maxPrice => <option value={maxPrice} key={maxPrice}>{maxPrice} €</option>)}
           </select>
@@ -57,12 +61,6 @@ function SearchBar() {
         <div className="col-md-1">
           <button className="btn btn-secondary btn-lg" onClick={handleResetSearch}>
             X
-          </button>
-        </div>
-
-        <div className="col-md-2">
-          <button className="btn btn-primary btn-lg w-80" onClick={handleSearch}>
-            <Search /> Rechercher
           </button>
         </div>
 

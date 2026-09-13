@@ -1,55 +1,47 @@
 import { useState } from "react";
 import type { SearchFilter } from "../models/search.model";
 import { FUELS, GEAR_BOXES } from "../constant/data";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateSearchFilters } from "../store/carSlice";
 import type { GearBox } from "../models/car.model";
+import type { RootState } from "../store/store";
 
 
 function FilterSidebar() {
 
   const dispatch = useDispatch();
 
-  const [minYear, setMinYear] = useState<number>();
-  const [maxYear, setMaxYear] = useState<number>();
-  const [fuels, setFuels] = useState<string[]>([]);
-  const [gearboxes, setGearboxes] = useState<GearBox[]>([]);
+  const filters = useSelector(
+    (state: RootState) => state.cars.filters
+  )
 
   const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
     const minYear = e?.target?.value ? Number(e.target.value) : undefined
     dispatch(updateSearchFilters({ minYear }))
-
-    setMinYear(minYear)
   }
 
   const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
     const maxYear = e?.target?.value ? Number(e.target.value) : undefined
     dispatch(updateSearchFilters({ maxYear }))
-
-    setMaxYear(maxYear)
   }
 
+  /**
+   * C'est le fonctionnement d'un toggle standard
+   */
   const handleFuelsChange = (fuel: string) => {
-    // C'est le fonctionnement d'un toggle standard
-    setFuels((currentFuels) => {
-      const newfuels = currentFuels.includes(fuel)
-        ? currentFuels.filter(item => item !== fuel)
-        : [...currentFuels, fuel]
-      dispatch(updateSearchFilters({ fuels: newfuels }))
-
-      return newfuels;
-    });
+    const currentFilters = filters?.fuels ?? []
+    const newfuels = currentFilters.includes(fuel)
+      ? currentFilters.filter(item => item !== fuel)
+      : [...currentFilters, fuel]
+    dispatch(updateSearchFilters({ fuels: newfuels }))
   }
 
   const handleGearBoxes = (gearBox: GearBox) => {
-    setGearboxes((currentGearBoxes) => {
-      const newGearBoxes = currentGearBoxes.includes(gearBox)
-        ? currentGearBoxes.filter(item => item !== gearBox)
-        : [...currentGearBoxes, gearBox]
-      dispatch(updateSearchFilters({ gearboxes: newGearBoxes }))
-
-      return newGearBoxes;
-    });
+    const currentGearBoxes = filters.gearboxes ?? [];
+    const newGearBoxes = currentGearBoxes.includes(gearBox)
+      ? currentGearBoxes.filter(item => item !== gearBox)
+      : [...currentGearBoxes, gearBox]
+    dispatch(updateSearchFilters({ gearboxes: newGearBoxes }));
   }
 
   return (
@@ -71,7 +63,7 @@ function FilterSidebar() {
                 type="number"
                 className="form-control"
                 placeholder="Min"
-                value={minYear}
+                value={filters.minYear ?? ""}
                 onChange={handleMinYear}
               />
             </div>
@@ -81,7 +73,7 @@ function FilterSidebar() {
                 type="number"
                 className="form-control"
                 placeholder="Max"
-                value={maxYear}
+                value={filters.maxYear ?? ""}
                 onChange={handleMaxYear}
               />
             </div>
@@ -101,6 +93,7 @@ function FilterSidebar() {
                 className="form-check-input"
                 type="checkbox"
                 id={fuel}
+                checked={!!filters.fuels?.find(item => item === fuel)}
                 onChange={() => handleFuelsChange(fuel)}
               />
 
@@ -127,7 +120,7 @@ function FilterSidebar() {
                 className="form-check-input"
                 type="checkbox"
                 id="gearbox"
-                value={gearbox}
+                checked={!!filters.gearboxes?.find(item => item === gearbox)}
                 onChange={() => handleGearBoxes(gearbox)}
               />
 
