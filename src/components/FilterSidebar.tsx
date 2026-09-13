@@ -139,7 +139,7 @@ function FilterSidebar({ onSearch }: Props) {
                 className="form-check-label"
                 htmlFor="manual"
               >
-                {gearbox}
+                {gearbox.toLowerCase()}
               </label>
             </div>
           )}

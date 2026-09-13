@@ -9,16 +9,15 @@ import type { Car } from "../models/car.model";
 
 function Home() {
 
-  const [orderedFilteredCars, setOrderedFilteredCars] = useState(CARS);
+  const [headerFilter, setHeaderFilter] = useState<SearchFilter>({});
+  const [sidebarFilter, setSidebarFilter] = useState<SidebarFilter>({});
 
   const onSearch = (filter: SearchFilter) => {
-    console.log('onSearch click', filter)
+    setHeaderFilter(filter);
+  }
 
-    const newCars = CARS.filter(car => !filter.brand || (car.brand === filter.brand))
-      .filter(car => !filter.model || (car.model === filter.model))
-      .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
-
-    setOrderedFilteredCars(newCars);
+  const handleSidebarFilter = (filter: SidebarFilter) => {
+    setSidebarFilter(filter);
   }
 
   const handleSort = (order: string) => {
@@ -42,14 +41,14 @@ function Home() {
     setOrderedFilteredCars([...filteredCars])
   }
 
-  const handleSidebarFilter = (filter: SidebarFilter) => {
-    const newCars = CARS.filter(car => !filter.minYear || (filter.minYear <= car.year))
-      .filter(car => !filter.maxYear || (filter.maxYear >= car.year))
-      .filter(car => !filter.fuels?.length || filter.fuels.includes(car.fuel))
-      .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
-
-    setOrderedFilteredCars(newCars);
-  }
+  // Computed
+  const filteredCars = CARS.filter(car => !headerFilter.brand || (car.brand === headerFilter.brand))
+    .filter(car => !headerFilter.model || (car.model === headerFilter.model))
+    .filter(car => !headerFilter.maxPrice || (car.price <= headerFilter.maxPrice))
+    .filter(car => !sidebarFilter.minYear || (sidebarFilter.minYear <= car.year))
+    .filter(car => !sidebarFilter.maxYear || (sidebarFilter.maxYear >= car.year))
+    .filter(car => !sidebarFilter.fuels?.length || sidebarFilter.fuels.includes(car.fuel))
+    .filter(car => !sidebarFilter.gearboxes?.length || sidebarFilter.gearboxes.includes(car.gearbox))
 
   return (
     <>
@@ -95,7 +94,7 @@ function Home() {
 
             </div>
 
-            {orderedFilteredCars.map((car) => (
+            {filteredCars.map((car) => (
               <CarCard key={car.id} car={car} />
             ))}
 
