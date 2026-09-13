@@ -19,25 +19,24 @@ function FilterSidebar({ onSearch }: Props) {
 
 
   const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const year = e?.target?.value ? Number(e.target.value) : 0
+    const year = e?.target?.value ? Number(e.target.value) : undefined
     setMinYear(year)
   }
 
   const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const year = e?.target?.value ? Number(e.target.value) : 2099
+    const year = e?.target?.value ? Number(e.target.value) : undefined
     setMaxYear(year)
   }
 
   const handleSearch = () => {
     const data = {
-      minYear: minYear,
-      maxYear: maxYear,
-      fuels: fuels,
-      gearboxes: gearboxes,
+      minYear,
+      maxYear,
+      fuels,
+      gearboxes,
     };
 
-    console.log(data)
-    // onSearch(data)
+    onSearch(data)
   }
 
   const handleFuelsChange = (fuel: string) => {

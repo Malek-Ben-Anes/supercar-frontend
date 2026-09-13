@@ -3,7 +3,7 @@ import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
-import type { SearchFilter } from "../models/search.model";
+import type { SearchFilter, SidebarFilter } from "../models/search.model";
 import { useState } from "react";
 import type { Car } from "../models/car.model";
 
@@ -42,6 +42,15 @@ function Home() {
     setOrderedFilteredCars([...filteredCars])
   }
 
+  const handleSidebarFilter = (filter: SidebarFilter) => {
+    const newCars = CARS.filter(car => !filter.minYear || (filter.minYear <= car.year))
+      .filter(car => !filter.maxYear || (filter.maxYear >= car.year))
+      .filter(car => !filter.fuels?.length || filter.fuels.includes(car.fuel))
+      .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
+
+    setOrderedFilteredCars(newCars);
+  }
+
   return (
     <>
       <Navbar />
@@ -66,7 +75,7 @@ function Home() {
         <div className="row">
 
           <div className="col-lg-3">
-            <FilterSidebar />
+            <FilterSidebar onSearch={handleSidebarFilter} />
           </div>
 
           <div className="col-lg-9">

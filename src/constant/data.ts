@@ -203,6 +203,6 @@ export const FUELS = [
 ]
 
 export const GEAR_BOXES = [
-    "manuelle", // TODO refactor les types
+    "Manuelle", // TODO refactor les types
     "Automatique",
 ]
