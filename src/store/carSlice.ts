@@ -3,6 +3,7 @@ import { CARS } from "../constant/data";
 import type { SearchFilter } from "../models/search.model";
 import type { Car } from "../models/car.model";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { filterCars } from "../utils/array-utils";
 
 
 type CarState = {
@@ -28,24 +29,9 @@ const carSlice = createSlice({
   initialState,
   reducers: {
     updateSearchFilters: (state, action: PayloadAction<SearchFilter>) => {
-      state.filters.brand = action.payload.brand;
-      state.filters.model = action.payload.model;
-      state.filters.maxPrice = action.payload.maxPrice;
-      state.filters.minYear = action.payload.minYear;
-      state.filters.maxYear = action.payload.maxYear;
-      state.filters.fuels = action.payload.fuels;
-      state.filters.gearboxes = action.payload.gearboxes;
-
-      const filter = state.filters;
-      const filteredCars = CARS.filter(car => !filter.brand || (car.brand === filter.brand))
-        .filter(car => !filter.model || (car.model === filter.model))
-        .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
-        .filter(car => !filter.minYear || (filter.minYear <= car.year))
-        .filter(car => !filter.maxYear || (filter.maxYear >= car.year))
-        .filter(car => !filter.fuels?.length || filter.fuels.includes(car.fuel))
-        .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
-
-      state.cars = [...filteredCars]
+      state.filters = { ...action.payload };
+      const filteredCars = filterCars(CARS, state.filters);
+      state.cars = [...filteredCars];
     },
   }
 });
