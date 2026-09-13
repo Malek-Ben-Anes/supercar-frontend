@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { orderCars } from "../store/carSlice";
 
-function Home() {
+function HomePage() {
 
   const dispatch = useDispatch();
 
@@ -75,4 +75,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
