@@ -11,18 +11,6 @@ export const filterCars = (cars: Car[], filter: SearchFilter): Car[] => {
         .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
 }
 
-export const filterArr = <T>(arr: T[], filters: Partial<T>): T[] => {
-    return arr.filter(item => {
-        Object.entries(filters).every(([Key, value]) => {
-            if (value === undefined) {
-                return true;
-            }
-
-            return item[key as keyof T] === value;
-        })
-    });
-}
-
 export const sortCars = (cars: Car[], orderObj: Order): Car[] => {
     const order = orderObj.order;
 
@@ -40,5 +28,4 @@ export const sortCars = (cars: Car[], orderObj: Order): Car[] => {
         paramSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage
     }
     return cars.sort(paramSort)
-
 }

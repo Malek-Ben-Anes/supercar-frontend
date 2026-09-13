@@ -1,5 +1,3 @@
-import { useState } from "react";
-import type { SearchFilter } from "../models/search.model";
 import { FUELS, GEAR_BOXES } from "../constant/data";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSearchFilters } from "../store/carSlice";

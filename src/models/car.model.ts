@@ -7,18 +7,13 @@ export interface Car {
     fuel: string;
     gearbox: GearBox;
     price: number;
-    location: Location;
+    location: string;
     image: string;
 }
 
+export const GearBox = {
+    Manual: "MANUELLE",
+    Automatic: "AUTOMATIQUE",
+} as const;
 
-export interface Location {
-    city: string;
-    country: string;
-    postalCode: number;
-}
-
-export enum GearBox {
-    Manual = "MANUELLE",
-    Automatic = "AUTOMATIQUE",
-}
+export type GearBox = typeof GearBox[keyof typeof GearBox];
