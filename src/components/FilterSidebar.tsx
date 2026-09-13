@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { SidebarFilter } from "../models/search.model";
+import type { SearchFilter } from "../models/search.model";
 import { FUELS, GEAR_BOXES } from "../constant/data";
 
 
 interface Props {
-  onSearch: (filter: SidebarFilter) => void;
+  onSearch: (filter: SearchFilter) => void;
 }
 
 function FilterSidebar({ onSearch }: Props) {
@@ -22,7 +22,7 @@ function FilterSidebar({ onSearch }: Props) {
     setMinYear(year)
   }
 
-  const triggerSearch = (filters: SidebarFilter) => {
+  const triggerSearch = (filters: SearchFilter) => {
 
     const data = {
       minYear,

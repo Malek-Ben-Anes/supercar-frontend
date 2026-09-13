@@ -3,21 +3,16 @@ import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
-import type { SearchFilter, SidebarFilter } from "../models/search.model";
+import type { SearchFilter } from "../models/search.model";
 import { useState } from "react";
 import type { Car } from "../models/car.model";
 
 function Home() {
 
-  const [headerFilter, setHeaderFilter] = useState<SearchFilter>({});
-  const [sidebarFilter, setSidebarFilter] = useState<SidebarFilter>({});
+  const [filter, setFilter] = useState<SearchFilter>({});
 
   const onSearch = (filter: SearchFilter) => {
-    setHeaderFilter(filter);
-  }
-
-  const handleSidebarFilter = (filter: SidebarFilter) => {
-    setSidebarFilter(filter);
+    setFilter(filter);
   }
 
   const handleSort = (order: string) => {
@@ -42,13 +37,13 @@ function Home() {
   }
 
   // Computed
-  const filteredCars = CARS.filter(car => !headerFilter.brand || (car.brand === headerFilter.brand))
-    .filter(car => !headerFilter.model || (car.model === headerFilter.model))
-    .filter(car => !headerFilter.maxPrice || (car.price <= headerFilter.maxPrice))
-    .filter(car => !sidebarFilter.minYear || (sidebarFilter.minYear <= car.year))
-    .filter(car => !sidebarFilter.maxYear || (sidebarFilter.maxYear >= car.year))
-    .filter(car => !sidebarFilter.fuels?.length || sidebarFilter.fuels.includes(car.fuel))
-    .filter(car => !sidebarFilter.gearboxes?.length || sidebarFilter.gearboxes.includes(car.gearbox))
+  const filteredCars = CARS.filter(car => !filter.brand || (car.brand === filter.brand))
+    .filter(car => !filter.model || (car.model === filter.model))
+    .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
+    .filter(car => !filter.minYear || (filter.minYear <= car.year))
+    .filter(car => !filter.maxYear || (filter.maxYear >= car.year))
+    .filter(car => !filter.fuels?.length || filter.fuels.includes(car.fuel))
+    .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
 
   return (
     <>
@@ -74,7 +69,7 @@ function Home() {
         <div className="row">
 
           <div className="col-lg-3">
-            <FilterSidebar onSearch={handleSidebarFilter} />
+            <FilterSidebar onSearch={onSearch} />
           </div>
 
           <div className="col-lg-9">
