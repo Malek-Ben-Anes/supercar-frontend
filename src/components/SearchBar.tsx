@@ -54,9 +54,9 @@ function SearchBar() {
           </select>
         </div>
 
-        <div className="col-md-1">
-          <button className="btn btn-secondary btn-lg" onClick={handleResetSearch}>
-            X
+        <div className="col-md-3">
+          <button className="btn btn-primary btn-lg w-80" onClick={handleResetSearch}>
+            Reset filter
           </button>
         </div>
 
