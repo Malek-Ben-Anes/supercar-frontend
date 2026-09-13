@@ -1,18 +1,19 @@
 import { useState } from "react";
 import type { SearchFilter } from "../models/search.model";
 import { FUELS, GEAR_BOXES } from "../constant/data";
+import { useDispatch } from "react-redux";
+import { updateSearchFilters } from "../store/carSlice";
+import type { GearBox } from "../models/car.model";
 
 
-interface Props {
-  onSearch: (filter: SearchFilter) => void;
-}
+function FilterSidebar() {
 
-function FilterSidebar({ onSearch }: Props) {
+  const dispatch = useDispatch();
 
   const [minYear, setMinYear] = useState<number>();
   const [maxYear, setMaxYear] = useState<number>();
   const [fuels, setFuels] = useState<string[]>([]);
-  const [gearboxes, setGearboxes] = useState<string[]>([]);
+  const [gearboxes, setGearboxes] = useState<GearBox[]>([]);
 
   const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
     const year = e?.target?.value ? Number(e.target.value) : undefined
@@ -31,7 +32,7 @@ function FilterSidebar({ onSearch }: Props) {
       gearboxes,
     };
 
-    onSearch({ ...data, ...filters })
+    dispatch(updateSearchFilters({ ...data, ...filters }))
   }
 
   const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
@@ -54,7 +55,7 @@ function FilterSidebar({ onSearch }: Props) {
     });
   }
 
-  const handleGearBoxes = (gearBox: string) => {
+  const handleGearBoxes = (gearBox: GearBox) => {
     setGearboxes((currentGearBoxes) => {
       const newGearBoxes = currentGearBoxes.includes(gearBox)
         ? currentGearBoxes.filter(item => item !== gearBox)

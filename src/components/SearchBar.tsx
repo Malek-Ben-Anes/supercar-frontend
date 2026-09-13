@@ -1,13 +1,13 @@
 import { Search } from "react-bootstrap-icons";
 import { CARS_MODELS, SEARCH_PRICES, BRANDS } from "../constant/data";
 import { useState } from "react";
-import type { SearchFilter } from "../models/search.model";
+import { useDispatch } from "react-redux";
+import { updateSearchFilters } from "../store/carSlice";
 
-interface Props {
-  onSearch: (filter: SearchFilter) => void;
-}
 
-function SearchBar({ onSearch }: Props) {
+function SearchBar() {
+
+  const dispatch = useDispatch();
 
   const [tradeChoice, setTradeChoice] = useState('');
   const [modelChoice, setModelChoice] = useState('');
@@ -20,7 +20,7 @@ function SearchBar({ onSearch }: Props) {
       maxPrice: maxPriceChoice
     };
 
-    onSearch(data)
+    dispatch(updateSearchFilters(data));
   }
 
 

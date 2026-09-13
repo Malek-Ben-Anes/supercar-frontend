@@ -3,47 +3,14 @@ import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
-import type { SearchFilter } from "../models/search.model";
-import { useState } from "react";
-import type { Car } from "../models/car.model";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 function Home() {
 
-  const [filter, setFilter] = useState<SearchFilter>({});
-
-  const onSearch = (filter: SearchFilter) => {
-    setFilter(filter);
-  }
-
-  const handleSort = (order: string) => {
-    let filteredCars = CARS;
-
-    let paramSort;
-    if (order === "year") {
-      paramSort = (c1: Car, c2: Car) => c1.year - c2.year
-    }
-    if (order === "priceAsc") {
-      paramSort = (c1: Car, c2: Car) => c1.price - c2.price
-    }
-    if (order === "priceDesc") {
-      paramSort = (c1: Car, c2: Car) => c2.price - c1.price
-    }
-    if (order === "mileage") {
-      paramSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage
-    }
-
-    filteredCars = filteredCars.sort(paramSort)
-    setOrderedFilteredCars([...filteredCars])
-  }
-
-  // Computed
-  const filteredCars = CARS.filter(car => !filter.brand || (car.brand === filter.brand))
-    .filter(car => !filter.model || (car.model === filter.model))
-    .filter(car => !filter.maxPrice || (car.price <= filter.maxPrice))
-    .filter(car => !filter.minYear || (filter.minYear <= car.year))
-    .filter(car => !filter.maxYear || (filter.maxYear >= car.year))
-    .filter(car => !filter.fuels?.length || filter.fuels.includes(car.fuel))
-    .filter(car => !filter.gearboxes?.length || filter.gearboxes.includes(car.gearbox))
+  const cars = useSelector(
+    (state: RootState) => state.cars.cars
+  )
 
   return (
     <>
@@ -62,14 +29,14 @@ function Home() {
             </p>
           </div>
 
-          <SearchBar onSearch={onSearch} />
+          <SearchBar />
         </div>
       </section>
       <main className="container py-5">
         <div className="row">
 
           <div className="col-lg-3">
-            <FilterSidebar onSearch={onSearch} />
+            <FilterSidebar />
           </div>
 
           <div className="col-lg-9">
@@ -80,7 +47,7 @@ function Home() {
                 <strong>{CARS.length}</strong> voitures trouvées
               </h5>
 
-              <select className="form-select w-auto" onChange={(e) => handleSort(e.target.value)}>
+              <select className="form-select w-auto" onChange={(e) => { }}>
                 <option value="year">Plus récentes</option>
                 <option value="priceAsc">Prix croissant</option>
                 <option value="priceDesc">Prix décroissant</option>
@@ -89,7 +56,7 @@ function Home() {
 
             </div>
 
-            {filteredCars.map((car) => (
+            {cars.map((car) => (
               <CarCard key={car.id} car={car} />
             ))}
 
