@@ -7,8 +7,15 @@ export interface Car {
     fuel: string;
     gearbox: GearBox;
     price: number;
-    location: string;
+    location: Location;
     image: string;
+}
+
+
+export interface Location {
+    city: string;
+    country: string;
+    postalCode: number;
 }
 
 export enum GearBox {
