@@ -1,4 +1,3 @@
-import { Search } from "react-bootstrap-icons";
 import { CARS_MODELS, SEARCH_PRICES, BRANDS } from "../constant/data";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSearchFilters, updateSearchFilters } from "../store/carSlice";
@@ -11,7 +10,6 @@ function SearchBar() {
   const filters = useSelector(
     (state: RootState) => state.cars.filters
   )
-
 
   const handleResetSearch = () => {
     dispatch(resetSearchFilters())
@@ -28,8 +26,6 @@ function SearchBar() {
   const handleMaxPrice = (maxPrice: number) => {
     dispatch(updateSearchFilters({ maxPrice }))
   }
-
-  console.log('render', filters.brand)
 
 
   return (
