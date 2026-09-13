@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CARS } from "../constant/data";
-import type { SearchFilter } from "../models/search.model";
+import type { Order, SearchFilter } from "../models/search.model";
 import type { Car } from "../models/car.model";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { filterCars } from "../utils/array-utils";
+import { filterCars, sortCars } from "../utils/array-utils";
 
 
 type CarState = {
   cars: Car[];
   filters: SearchFilter,
+  order: Order;
 }
 
 const initialState: CarState = {
@@ -21,7 +22,10 @@ const initialState: CarState = {
     maxYear: undefined,
     fuels: [],
     gearboxes: []
-  }
+  },
+  order: {
+    order: "year"
+  },
 };
 
 const carSlice = createSlice({
@@ -29,37 +33,27 @@ const carSlice = createSlice({
   initialState,
   reducers: {
     updateSearchFilters: (state, action: PayloadAction<SearchFilter>) => {
-      state.filters = { ...action.payload };
+      state.filters = { ...state.filters, ...action.payload };
       const filteredCars = filterCars(CARS, state.filters);
-      state.cars = [...filteredCars];
+      const orderedFileredCars = sortCars(filteredCars, state.order);
+      state.cars = [...orderedFileredCars];
     },
+    orderCars: (state, action: PayloadAction<Order>) => {
+      state.order = action.payload;
+      const orderedCars = sortCars(state.cars, state.order);
+      state.cars = [...orderedCars];
+    },
+    resetSearchFilters: (state) => {
+      state.cars = [...CARS]
+      state.filters = { ...initialState.filters }
+      state.order = { ...initialState.order }
+    }
   }
 });
 
-/*
-  const handleSort = (order: string) => {
-    let filteredCars = CARS;
 
-    let paramSort;
-    if (order === "year") {
-      paramSort = (c1: Car, c2: Car) => c1.year - c2.year
-    }
-    if (order === "priceAsc") {
-      paramSort = (c1: Car, c2: Car) => c1.price - c2.price
-    }
-    if (order === "priceDesc") {
-      paramSort = (c1: Car, c2: Car) => c2.price - c1.price
-    }
-    if (order === "mileage") {
-      paramSort = (c1: Car, c2: Car) => c1.mileage - c2.mileage
-    }
 
-    filteredCars = filteredCars.sort(paramSort)
-    setOrderedFilteredCars([...filteredCars])
-  }
-    */
-
-export const { updateSearchFilters, resetSearchFilters } = carSlice.actions;
+export const { updateSearchFilters, orderCars, resetSearchFilters } = carSlice.actions;
 
 export default carSlice.reducer;
 

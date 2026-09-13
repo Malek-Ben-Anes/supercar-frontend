@@ -3,14 +3,21 @@ import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import { CARS } from "../constant/data";
 import CarCard from "./CarCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
+import { orderCars } from "../store/carSlice";
 
 function Home() {
+
+  const dispatch = useDispatch();
 
   const cars = useSelector(
     (state: RootState) => state.cars.cars
   )
+
+  const handleOrder = (order: string) => {
+    dispatch(orderCars({ order }));
+  }
 
   return (
     <>
@@ -47,7 +54,7 @@ function Home() {
                 <strong>{CARS.length}</strong> voitures trouvées
               </h5>
 
-              <select className="form-select w-auto" onChange={(e) => { }}>
+              <select className="form-select w-auto" onChange={(e) => handleOrder(e.target.value)}>
                 <option value="year">Plus récentes</option>
                 <option value="priceAsc">Prix croissant</option>
                 <option value="priceDesc">Prix décroissant</option>

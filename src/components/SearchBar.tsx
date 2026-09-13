@@ -2,7 +2,7 @@ import { Search } from "react-bootstrap-icons";
 import { CARS_MODELS, SEARCH_PRICES, BRANDS } from "../constant/data";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateSearchFilters } from "../store/carSlice";
+import { resetSearchFilters, updateSearchFilters } from "../store/carSlice";
 
 
 function SearchBar() {
@@ -21,6 +21,10 @@ function SearchBar() {
     };
 
     dispatch(updateSearchFilters(data));
+  }
+
+  const handleResetSearch = () => {
+    dispatch(resetSearchFilters())
   }
 
 
@@ -50,8 +54,14 @@ function SearchBar() {
           </select>
         </div>
 
-        <div className="col-md-3">
-          <button className="btn btn-primary btn-lg w-100" onClick={handleSearch}>
+        <div className="col-md-1">
+          <button className="btn btn-secondary btn-lg" onClick={handleResetSearch}>
+            X
+          </button>
+        </div>
+
+        <div className="col-md-2">
+          <button className="btn btn-primary btn-lg w-80" onClick={handleSearch}>
             <Search /> Rechercher
           </button>
         </div>

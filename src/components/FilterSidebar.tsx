@@ -16,30 +16,17 @@ function FilterSidebar() {
   const [gearboxes, setGearboxes] = useState<GearBox[]>([]);
 
   const handleMinYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const year = e?.target?.value ? Number(e.target.value) : undefined
+    const minYear = e?.target?.value ? Number(e.target.value) : undefined
+    dispatch(updateSearchFilters({ minYear }))
 
-    triggerSearch({ minYear: year });
-
-    setMinYear(year)
-  }
-
-  const triggerSearch = (filters: SearchFilter) => {
-
-    const data = {
-      minYear,
-      maxYear,
-      fuels,
-      gearboxes,
-    };
-
-    dispatch(updateSearchFilters({ ...data, ...filters }))
+    setMinYear(minYear)
   }
 
   const handleMaxYear = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    const year = e?.target?.value ? Number(e.target.value) : undefined
-    triggerSearch({ maxYear: year });
+    const maxYear = e?.target?.value ? Number(e.target.value) : undefined
+    dispatch(updateSearchFilters({ maxYear }))
 
-    setMaxYear(year)
+    setMaxYear(maxYear)
   }
 
   const handleFuelsChange = (fuel: string) => {
@@ -48,8 +35,7 @@ function FilterSidebar() {
       const newfuels = currentFuels.includes(fuel)
         ? currentFuels.filter(item => item !== fuel)
         : [...currentFuels, fuel]
-
-      triggerSearch({ fuels: newfuels });
+      dispatch(updateSearchFilters({ fuels: newfuels }))
 
       return newfuels;
     });
@@ -60,8 +46,7 @@ function FilterSidebar() {
       const newGearBoxes = currentGearBoxes.includes(gearBox)
         ? currentGearBoxes.filter(item => item !== gearBox)
         : [...currentGearBoxes, gearBox]
-
-      triggerSearch({ gearboxes: newGearBoxes });
+      dispatch(updateSearchFilters({ gearboxes: newGearBoxes }))
 
       return newGearBoxes;
     });

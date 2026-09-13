@@ -9,3 +9,7 @@ export interface SearchFilter {
     fuels?: string[];
     gearboxes?: GearBox[];
 }
+
+export interface Order {
+    order: string;
+}

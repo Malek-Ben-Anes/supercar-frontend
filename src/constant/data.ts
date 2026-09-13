@@ -180,13 +180,193 @@ export const CARS: Car[] = [
         price: 57900,
         location: "Neuilly-sur-Seine",
         image: "https://images.unsplash.com/photo-1504215680853-026ed2a45def"
+    },
+    {
+        id: 16,
+        brand: "BMW",
+        model: "Série 1 118i",
+        year: 2022,
+        mileage: 28000,
+        fuel: "Essence",
+        gearbox: GearBox.Automatic,
+        price: 26900,
+        location: "Paris",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e"
+    },
+    {
+        id: 17,
+        brand: "BMW",
+        model: "Série 1 120d",
+        year: 2020,
+        mileage: 64000,
+        fuel: "Diesel",
+        gearbox: GearBox.Automatic,
+        price: 23900,
+        location: "Argenteuil",
+        image: "https://images.unsplash.com/photo-1556189250-72ba954cfc2b"
+    },
+    {
+        id: 18,
+        brand: "BMW",
+        model: "Série 2 218i Gran Coupé",
+        year: 2021,
+        mileage: 41000,
+        fuel: "Essence",
+        gearbox: GearBox.Automatic,
+        price: 27900,
+        location: "Bezons",
+        image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068"
+    },
+    {
+        id: 19,
+        brand: "BMW",
+        model: "Série 3 318d",
+        year: 2020,
+        mileage: 72000,
+        fuel: "Diesel",
+        gearbox: GearBox.Automatic,
+        price: 27400,
+        location: "Nanterre",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e"
+    },
+    {
+        id: 20,
+        brand: "BMW",
+        model: "Série 3 330e",
+        year: 2022,
+        mileage: 35000,
+        fuel: "Hybride",
+        gearbox: GearBox.Automatic,
+        price: 36900,
+        location: "Versailles",
+        image: "https://images.unsplash.com/photo-1556189250-72ba954cfc2b"
+    },
+    {
+        id: 21,
+        brand: "BMW",
+        model: "Série 4 420i",
+        year: 2021,
+        mileage: 47000,
+        fuel: "Essence",
+        gearbox: GearBox.Automatic,
+        price: 38900,
+        location: "Boulogne-Billancourt",
+        image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068"
+    },
+    {
+        id: 22,
+        brand: "BMW",
+        model: "Série 5 520d",
+        year: 2020,
+        mileage: 68000,
+        fuel: "Diesel",
+        gearbox: GearBox.Automatic,
+        price: 33900,
+        location: "Créteil",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e"
+    },
+    {
+        id: 23,
+        brand: "BMW",
+        model: "Série 5 530e",
+        year: 2022,
+        mileage: 39000,
+        fuel: "Hybride",
+        gearbox: GearBox.Automatic,
+        price: 42900,
+        location: "Levallois-Perret",
+        image: "https://images.unsplash.com/photo-1556189250-72ba954cfc2b"
+    },
+    {
+        id: 24,
+        brand: "BMW",
+        model: "X1 sDrive18i",
+        year: 2022,
+        mileage: 31000,
+        fuel: "Essence",
+        gearbox: GearBox.Automatic,
+        price: 32900,
+        location: "Colombes",
+        image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068"
+    },
+    {
+        id: 25,
+        brand: "BMW",
+        model: "X1 xDrive25e",
+        year: 2021,
+        mileage: 46000,
+        fuel: "Hybride",
+        gearbox: GearBox.Automatic,
+        price: 34900,
+        location: "Saint-Denis",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e"
+    },
+    {
+        id: 26,
+        brand: "BMW",
+        model: "X3 xDrive20d",
+        year: 2021,
+        mileage: 55000,
+        fuel: "Diesel",
+        gearbox: GearBox.Automatic,
+        price: 41900,
+        location: "Paris",
+        image: "https://images.unsplash.com/photo-1556189250-72ba954cfc2b"
+    },
+    {
+        id: 27,
+        brand: "BMW",
+        model: "X3 xDrive30e",
+        year: 2022,
+        mileage: 37000,
+        fuel: "Hybride",
+        gearbox: GearBox.Automatic,
+        price: 46900,
+        location: "Neuilly-sur-Seine",
+        image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068"
+    },
+    {
+        id: 28,
+        brand: "BMW",
+        model: "X5 xDrive30d",
+        year: 2020,
+        mileage: 79000,
+        fuel: "Diesel",
+        gearbox: GearBox.Automatic,
+        price: 54900,
+        location: "Versailles",
+        image: "https://images.unsplash.com/photo-1555215695-3004980ad54e"
+    },
+    {
+        id: 29,
+        brand: "BMW",
+        model: "i4 eDrive40",
+        year: 2023,
+        mileage: 18000,
+        fuel: "Électrique",
+        gearbox: GearBox.Automatic,
+        price: 52900,
+        location: "Paris",
+        image: "https://images.unsplash.com/photo-1556189250-72ba954cfc2b"
+    },
+    {
+        id: 30,
+        brand: "BMW",
+        model: "iX3",
+        year: 2022,
+        mileage: 29000,
+        fuel: "Électrique",
+        gearbox: GearBox.Automatic,
+        price: 48900,
+        location: "Nanterre",
+        image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068"
     }
 ];
 
 
-export const BRANDS = CARS.map(car => car.brand)
+export const BRANDS = [...new Set(CARS.map(car => car.brand))];
 
-export const CARS_MODELS = CARS.map(car => car.model)
+export const CARS_MODELS = [...new Set(CARS.map(car => car.model))];
 
 export const SEARCH_PRICES = [
     10000,
